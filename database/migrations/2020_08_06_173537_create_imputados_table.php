@@ -20,7 +20,7 @@ class CreateImputadosTable extends Migration
             $table->string('conden_oral');
             $table->string('absolut_oral');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

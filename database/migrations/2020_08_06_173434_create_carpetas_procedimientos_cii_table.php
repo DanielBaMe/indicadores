@@ -32,7 +32,7 @@ class CreateCarpetasProcedimientosCiiTable extends Migration
             $table->string('resueltos_oemasc_conciliacion');
             $table->string('resueltos_oemasc_acuerdo');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

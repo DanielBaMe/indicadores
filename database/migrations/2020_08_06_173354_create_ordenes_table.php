@@ -21,7 +21,7 @@ class CreateOrdenesTable extends Migration
             $table->string('ordenes_urgentes');
             $table->string('urgentes_cumplidas');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

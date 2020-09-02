@@ -18,7 +18,7 @@ class CreateDenunciasTable extends Migration
             $table->string('denuncias');
             $table->string('querellas');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

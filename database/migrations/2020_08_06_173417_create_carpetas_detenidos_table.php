@@ -18,7 +18,7 @@ class CreateCarpetasDetenidosTable extends Migration
             $table->string('detenido_flagancia');
             $table->string('sin_detenidos');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

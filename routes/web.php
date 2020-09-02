@@ -11,8 +11,8 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 
 Route::middleware(['auth:admin'])->group(function () {
-    
-    Route::get('/admin', function () {//Vista principal
+
+    Route::get('/admin', function () { //Vista principal
         return view('admin');
     });
 
@@ -31,6 +31,14 @@ Route::middleware(['auth:admin'])->group(function () {
         ////////////////////////////////////////////////////////////////////////////////////////
 
         //Registros nuevos
+
+        Route::get('nuevo_usuario', function () { //Crear usuario
+            return view('/registros/usuarios');
+        });
+
+        Route::get('unidad', function () { //Crear unidad
+            return view('/registros/unidad');
+        });
 
         Route::get('fecha', function () { //Fecha de registro
             return view('/registros/fechaRegistro');
@@ -56,11 +64,11 @@ Route::middleware(['auth:admin'])->group(function () {
             return view('/registros/imputados');
         });
 
-        Route::get('registrar_ordenes', function () {//Ordenes
+        Route::get('registrar_ordenes', function () { //Ordenes
             return view('/registros/ordenes');
         });
 
-        Route::get('registrar_procedimientos', function () {//Procedimientos
+        Route::get('registrar_procedimientos', function () { //Procedimientos
             return view('/registros/procedimientosVinculaciones');
         });
 
@@ -139,6 +147,24 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::post('/nueva/{id}', 'Api\ProcedimientosVinculacionesController@store');
             Route::post('/editar/{id}', 'Api\ProcedimientosVinculacionesController@update');
             Route::get('/{id}', 'Api\ProcedimientosVinculacionesController@show');
+        });
+
+        //USUARIO
+        Route::prefix('usuario')->group(function () {
+            Route::get('/', 'Api\UsuariosController@index');
+            Route::post('/nuevo', 'Api\UsuariosController@store');
+            Route::post('/modificar/{id}', 'Api\UsuariosController@update');
+            Route::post('/modificarclave/{id}', 'Api\UsuariosController@clave');
+            Route::delete('/borrar/{id}', 'Api\UsuariosController@destroy');
+            Route::post('/modificarPassword/{id}', 'Api\UsuariosController@passwordUpdate');
+        });
+
+        //UNIDAD
+        Route::prefix('unidad')->group(function () {
+            Route::get('/', 'Api\UnidadController@index');
+            Route::post('/nueva', 'Api\UnidadController@store');
+            Route::post('/editar/{id}', 'Api\UnidadController@update');
+            Route::get('/{id}', 'Api\UnidadController@show');
         });
 
         //Victimas

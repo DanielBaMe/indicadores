@@ -41,4 +41,9 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token){
         $this->notify(new AdminResetPassword($token));
     }
+
+    public function dependencia()
+    {
+        return $this->hasOne(Dependencia::class);
+    }
 }

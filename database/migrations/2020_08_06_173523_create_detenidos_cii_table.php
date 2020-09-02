@@ -19,7 +19,7 @@ class CreateDetenidosCiiTable extends Migration
             $table->string('orden_aprehension');
             $table->string('caso_urgente');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

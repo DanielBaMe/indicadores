@@ -20,7 +20,7 @@ class CreateVinculadosProcesoTable extends Migration
             $table->string('otra_medida');
             $table->string('sin_medida');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

@@ -51,10 +51,11 @@ class UsuariosController extends Controller
             $dato = new Usuarios;
             $dato -> name = $request -> nombre;
             $dato -> email = $request -> email;
-            $dato -> password = Crypt::encryptString($request -> password);
+            //$dato -> password = Crypt::encryptString($request -> password);
+            $dato -> password = Hash::make($request -> password);
             $dato -> save();
 
-            return response("creado", 200) -> header('Content-Type', 'application/json');
+            return view('/admin')
     }
 
     /**

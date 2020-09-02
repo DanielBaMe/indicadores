@@ -28,7 +28,7 @@ class CreateIndicadoresTable extends Migration
             $table->string('id_procedimientos_vinculaciones');
             $table->string('id_vinculados_proceso');
             $table->string('id_imputados');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }

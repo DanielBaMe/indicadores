@@ -19,7 +19,7 @@ class CreateVictimasTable extends Migration
             $table->string('hombres');
             $table->string('otros');
             $table->string('total');
-            $table->int('indicadores_id');
+            $table->integer('indicadores_id');
             $table->timestamps();
         });
     }
