@@ -8,6 +8,7 @@ use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
 use App\Models\CarpetasDetenidos;
 use App\Models\Indicadores;
+use App\Models\Dependencias;
 use Auth;
 
 class CarpetasDetenidosController extends Controller
@@ -22,16 +23,23 @@ class CarpetasDetenidosController extends Controller
     public function store(Request $request, $id)
     {
         $datos = [
-            'detenido_flagancia' => 'required',
-            'sin_detenidos' => 'required',
-            'total' => 'required'
+            'detenido_flagancia' => 'required|integer|min:1',
+            'sin_detenidos'      => 'required|integer|min:1',
+            'total'              => 'required'
         ];
         $this -> validate($request, $datos);
-        $indicador = Indicadores::where('id_usuario', $id)->latest()->first();
+
+        $unidad = Dependencias::where('usuario_id', $id)->get();
+        $prueba = $unidad[0];
+        $id_dependencia = $prueba['id'];
+
+        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+
         $dato = new CarpetasDetenidos;
         $dato -> detenido_flagancia = $request -> detenido_flagancia;
         $dato -> sin_detenidos = $request -> sin_detenidos;
         $dato -> total = $request -> total;
+
         $indicador->carpetasDetenidos()->save($dato);
 
         return redirect('/dev/registrar_ordenes');

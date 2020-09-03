@@ -31,9 +31,11 @@ class UnidadController extends Controller
             'id' => 'required'
         ];
         $this -> validate($request, $datos);
+
         $dato = new Dependencias;
         $dato -> nombre = $request -> nombre;
         $dato -> usuario_id = $request -> id;
+        
         $dato -> save();
 
         return redirect('/dev/registrar_victimas');

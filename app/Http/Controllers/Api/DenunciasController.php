@@ -3,55 +3,65 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
 use App\Models\Denuncias;
 use App\Models\Indicadores;
+use App\Models\Dependencias;
 use Auth;
 
 class DenunciasController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $denuncias = Denuncias::all();
         return $denuncias;
     }
 
-    public function store(Request $request, $id){
+    public function store(Request $request, $id)
+    {
         $datos = [
-            'denuncias' => 'required',
-            'querellas' => 'required',
-            'total' => 'required'
+            'denuncias' => 'required|integer|min:1',
+            'querellas' => 'required|integer|min:1',
+            'total'     => 'required'
         ];
-        $this -> validate($request, $datos);
-        $indicador = Indicadores::where('id_usuario', $id)->latest()->first();
+        $this->validate($request, $datos);
+
+        $unidad = Dependencias::where('usuario_id', $id)->get();
+        $prueba = $unidad[0];
+        $id_dependencia = $prueba['id'];
+
+        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+
         $dato = new Denuncias;
-        $dato -> denuncias = $request -> denuncias;
-        $dato -> querellas = $request -> querellas;
-        $dato -> total = $request -> total;
+        $dato->denuncias = $request->denuncias;
+        $dato->querellas = $request->querellas;
+        $dato->total = $request->total;
+
         $indicador->denuncias()->save($dato);
 
         return redirect('/dev/registrar_victimas');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $datos = [
             'denuncias' => 'required',
             'querellas' => 'required',
             'total' => 'required'
         ];
-        $this -> validate($request, $datos);
+        $this->validate($request, $datos);
 
         $dato = Denuncias::findOrFail($id);
-        $dato -> denuncias = $request -> denuncias;
-        $dato -> querellas = $request -> querellas;
-        $dato -> total = $request -> total;
-        $dato -> save();
+        $dato->denuncias = $request->denuncias;
+        $dato->querellas = $request->querellas;
+        $dato->total = $request->total;
+        $dato->save();
 
-        return response("ok", 200) -> header('Content-Type', 'application/json');
+        return response("ok", 200)->header('Content-Type', 'application/json');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $dato = Denuncias::findOrFail($id);
         return $dato;
     }

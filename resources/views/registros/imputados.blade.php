@@ -15,7 +15,7 @@
 
     <h4>Id usuario {{$id_usuario}}</h4>
     <div style="padding: 60px 160px 0px 160px" class="container d-flex flex-column ">
-        <h1>Victimas</h1>
+        <h1>Registrar imputados</h1>
         @if(count($errors) > 0)
         <div class="alert alert-danger">
             <ul>

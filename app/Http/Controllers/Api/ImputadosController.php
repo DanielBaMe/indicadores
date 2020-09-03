@@ -8,6 +8,7 @@ use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
 use App\Models\Imputados;
 use App\Models\Indicadores;
+use App\Models\Dependencias;
 use Auth;
 
 class ImputadosController extends Controller
@@ -22,20 +23,27 @@ class ImputadosController extends Controller
     public function store(Request $request, $id)
     {
         $datos = [
-            'condena' => 'required',
-            'absuelto' => 'required',
-            'conoral' => 'required',
-            'absoloral' => 'required',
-            'total' => 'required'
+            'condena'   => 'required|integer|min:1',
+            'absuelto'  => 'required|integer|min:1',
+            'conoral'   => 'required|integer|min:1',
+            'absoloral' => 'required|integer|min:1',
+            'total'     => 'required'
         ];
-        $this -> validate($request, $datos);
-        $indicador = Indicadores::where('id_usuario', $id)->latest()->first();
+        $this->validate($request, $datos);
+
+        $unidad = Dependencias::where('usuario_id', $id)->get();
+        $prueba = $unidad[0];
+        $id_dependencia = $prueba['id'];
+
+        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+
         $dato = new Imputados;
-        $dato -> sent_conden = $request -> condena;
-        $dato -> sent_absolut = $request -> absuelto;
-        $dato -> conden_oral = $request -> conoral;
-        $dato -> absolut_oral = $request -> absoloral;
-        $dato -> total = $request -> total;
+        $dato->sent_conden = $request->condena;
+        $dato->sent_absolut = $request->absuelto;
+        $dato->conden_oral = $request->conoral;
+        $dato->absolut_oral = $request->absoloral;
+        $dato->total = $request->total;
+
         $indicador->carpetasProcedimientos()->save($dato);
 
         return redirect('/admin');
@@ -56,16 +64,16 @@ class ImputadosController extends Controller
             'absoloral' => 'required',
             'total' => 'required'
         ];
-        $this -> validate($request, $datos);
+        $this->validate($request, $datos);
 
         $dato = Imputados::findOrFail($id);
-        $dato -> sent_conden = $request -> condena;
-        $dato -> sent_absolut = $request -> absuelto;
-        $dato -> conden_oral = $request -> conoral;
-        $dato -> absolut_oral = $request -> absoloral;
-        $dato -> total = $request -> total;
-        $dato -> save();
+        $dato->sent_conden = $request->condena;
+        $dato->sent_absolut = $request->absuelto;
+        $dato->conden_oral = $request->conoral;
+        $dato->absolut_oral = $request->absoloral;
+        $dato->total = $request->total;
+        $dato->save();
 
-        return response("ok", 200) -> header('Content-Type', 'application/json');
+        return response("ok", 200)->header('Content-Type', 'application/json');
     }
 }

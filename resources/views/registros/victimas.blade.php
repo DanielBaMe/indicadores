@@ -31,6 +31,7 @@
             <div class="form-group mx-sm-3 mb-2">
                 <input id="hombres" name="hombres" placeholder="Hombres" type="number" min="1">
                 <input id="mujeres" name="mujeres" placeholder="Mujeres" type="number" min="1">
+                <input id="otros" name="otros" placeholder="otros" type="number" min="1">
                 <input id="total" name="total">
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>

@@ -77,7 +77,7 @@ Route::middleware(['auth:admin'])->group(function () {
         });
 
         Route::get('registrar_vinculados', function () { //vinculados
-            return view('/registros/vinculados');
+            return view('/registros/vinculadosProceso');
         });
 
         /////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ Route::middleware(['auth:admin'])->group(function () {
         //Indicadores
         Route::prefix('indicadores')->group(function () {
             Route::get('/{id}', 'Api\IndicadoresController@index');
-            Route::post('/nueva/{id}', 'Api\IndicadoresController@store');
+            Route::post('/nueva', 'Api\IndicadoresController@store');
             Route::post('/editar/{id}', 'Api\IndicadoresController@update');
             // Route::get('/{id}', 'Api\IndicadoresController@show');
         });

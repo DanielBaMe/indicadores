@@ -8,50 +8,63 @@ use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
 use App\Models\Victimas;
 use App\Models\Indicadores;
+use App\Models\Dependencias;
 use Auth;
 
 class VictimasController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $victimas = Victimas::all();
         return $victimas;
     }
 
-    public function store(Request $request, $id){
+    public function store(Request $request, $id)
+    {
         $datos = [
-            'hombreas' => 'required',
-            'mujeres' => 'required',
+            'hombres' => 'required|integer|min:1',
+            'mujeres' => 'required|integer|min:1',
+            'otros'   => 'required|integer|min:1',
             'total' => 'required'
         ];
-        $this -> validate($request, $datos);
-        $indicador = Indicadores::where('id_usuario', $id)->latest()->first();
-        $dato = new Victimas;
-        $dato -> hombreas = $request -> hombreas;
-        $dato -> mujeres = $request -> mujeres;
-        $dato -> total = $request -> total;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        $this->validate($request, $datos);
 
+        $unidad = Dependencias::where('usuario_id', $id)->get();
+        $prueba = $unidad[0];
+        $id_dependencia = $prueba['id'];
+
+        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+
+        $dato = new Victimas;
+        $dato->hombres = $request->hombres;
+        $dato->mujeres = $request->mujeres;
+        $dato->otros = $request->otros;
+        $dato->total = $request->total;
+
+        $indicador->victimas()->save($dato);
         return redirect('/dev/registrar_carpetas');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $datos = [
             'hombreas' => 'required',
             'mujeres' => 'mujeres',
             'total' => 'required'
         ];
-        $this -> validate($request, $datos);
+        $this->validate($request, $datos);
 
         $dato = Victimas::findOrFail($id);
-        $dato -> hombreas = $request -> hombreas;
-        $dato -> mujeres = $request -> mujeres;
-        $dato -> total = $request -> total;
-        $dato -> save();
+        $dato->hombreas = $request->hombreas;
+        $dato->mujeres = $request->mujeres;
+        $dato->total = $request->total;
+        $dato->save();
 
-        return response("ok", 200) -> header('Content-Type', 'application/json');
+        return response("ok", 200)->header('Content-Type', 'application/json');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $dato = Victimas::findOrFail($id);
         return $dato;
     }

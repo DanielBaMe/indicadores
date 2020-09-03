@@ -15,7 +15,7 @@
 
     <h4>Id usuario {{$id_usuario}}</h4>
     <div style="padding: 60px 160px 0px 160px" class="container d-flex flex-column ">
-        <h1>Victimas</h1>
+        <h1>Detenidos</h1>
         @if(count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -31,7 +31,7 @@
             <div class="form-group mx-sm-3 mb-2">
                 <input id="flagancia" name="flagancia" placeholder="Flagancia" type="number" min="1">
                 <input id="aprehension" name="aprehension" placeholder="Aprehension" type="number" min="1">
-                <input id="caso_urgente" name="caso_urgente" placeholder="Urgente" type="number" min="1">
+                <input id="caso" name="caso" placeholder="caso" type="number" min="1">
                 
                 <input id="total" name="total">
             </div>

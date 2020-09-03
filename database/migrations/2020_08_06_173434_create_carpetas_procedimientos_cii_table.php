@@ -27,7 +27,7 @@ class CreateCarpetasProcedimientosCiiTable extends Migration
             $table->string('tramite_investigacion');
             $table->string('vinculados');
             $table->string('oemasc_sn_acuerdo');
-            $table->string('oesmac_cn_acuerdo');
+            $table->string('oesmasc_cn_acuerdo');
             $table->string('resueltos_oemasc_mediacion');
             $table->string('resueltos_oemasc_conciliacion');
             $table->string('resueltos_oemasc_acuerdo');

@@ -15,7 +15,7 @@
 
     <h4>Id usuario {{$id_usuario}}</h4>
     <div style="padding: 60px 160px 0px 160px" class="container d-flex flex-column ">
-        <h1>Victimas</h1>
+        <h1>Ordenes</h1>
         @if(count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -29,7 +29,7 @@
             {{ csrf_field() }}
             <div class="form-group mx-sm-3 mb-2">
                 <input id="imputados" name="imputados" placeholder="Imputados" type="number" min="1">
-                <input id="juez_control" name="juez_control" placeholder="Juez" type="number" min="1">
+                <input id="juez" name="juez" placeholder="Juez" type="number" min="1">
                 <input id="ordcumplicados" name="ordcumplicados" placeholder="Ordenes" type="number" min="1">
                 <input id="ordurgentes" name="ordurgentes" placeholder="Urgentes" type="number" min="1">
                 <input id="urgentescumplicas" name="urgentescumplicas" placeholder="Urgentes" type="number" min="1">

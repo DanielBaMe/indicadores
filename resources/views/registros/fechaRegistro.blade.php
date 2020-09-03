@@ -23,7 +23,7 @@
               </ul>
             </div>
           @endif
-          <form action="/dev/indicadores/nueva/{{$id_usuario}}" method="POST" class="form-inline align-items-center justify-content-center" autocomplete="off" enctype="multipart/form-data">
+          <form action="/dev/indicadores/nueva" method="POST" class="form-inline align-items-center justify-content-center" autocomplete="off" enctype="multipart/form-data">
           {{ csrf_field() }}
             <div class="form-group mx-sm-3 mb-2">
               <input id="mes" name="mes" placeholder="Mes" type="number" min="01" max="12" required>

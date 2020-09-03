@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Routing\Redirector;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\Indicadores;
+use App\Models\Dependencias;
 use Auth;
 
 class IndicadoresController extends Controller
@@ -14,27 +14,33 @@ class IndicadoresController extends Controller
 
     public function index($id)
     {
-        $indicadores = Indicadores::where('id_usuario', $id)->get();
+        $unidad = Dependencias::where('usuario_id', $id)->get();
+        $indicadores = Indicadores::all();
         return view('menuRegistros', ['indicadores' => $indicadores]);
     }
 
     public function store(Request $request)
     {
         $datos = [
-            'anio' => 'required',
-            'mes' => 'required',
-            'id_usuario' => 'required'
+            'anio'       => 'required|integer|min:2017',
+            'mes'        => 'required|integer|min:1',
+            'id_usuario' => 'required|integer'
         ];
-        $this -> validate($request, $datos);
+        $this->validate($request, $datos);
 
         //$registros = Indicadores::where('id_usuario', $id);
         // if(empty($tamanio)){
-            $dato = new Indicadores;
-            $dato -> anio           = $request -> anio;
-            $dato -> mes            = $request -> mes;
-            $dato -> id_usuario     = $request -> id_usuario;
-            $dato -> save();
-            return redirect('/dev/registrar_denuncias');
+        $iduser = $request->id_usuario;
+        $unidad = Dependencias::where('usuario_id', $iduser)->get();
+        //dump($unidad[0]);
+        $prueba = $unidad[0];
+        $id = $prueba['id'];
+        $dato = new Indicadores;
+        $dato->anio            = $request->anio;
+        $dato->mes             = $request->mes;
+        $dato->id_dependencia  = $id;
+        $dato->save();
+        return redirect('/dev/registrar_denuncias');
         // }else{
         //     foreach($registros as $registro){
         //         if(($registro-> anio) == ($dato-> anio) && ($registro -> mes) == ($dato -> mes) ){
@@ -45,7 +51,7 @@ class IndicadoresController extends Controller
         //             $dato -> mes            = $request -> mes;
         //             $dato -> id_usuario     = $request -> id_usuario;
         //             $dato -> save();
-            
+
         //             return redirect('/detenidosView');
         //         }
         //     }
@@ -73,21 +79,19 @@ class IndicadoresController extends Controller
             'id_imputados',
         ];
         $dato = Indicadores::findOrFail($id);
-        $dato -> id_dependencia                     = $request -> id_dependencia;
-        $dato -> id_denuncias                       = $request -> id_denuncias;
-        $dato -> id_victimas                        = $request -> id_victimas;
-        $dato -> id_carpetas_detenidos              = $request -> id_carpetas_detenidos;
-        $dato -> id_ordenes                         = $request -> id_ordenes;
-        $dato -> id_detendos_cii                    = $request -> id_detendos_cii;
-        $dato -> id_procedimientos_cii              = $request -> id_procedimientos_cii;
-        $dato -> id_procedimientos_vinculaciones    = $request -> id_procedimientos_vinculaciones;
-        $dato -> id_vinculados_proceso              = $request -> id_vinculados_proceso;
-        $dato -> id_imputados                       = $request -> id_imputados;
+        $dato->id_dependencia                     = $request->id_dependencia;
+        $dato->id_denuncias                       = $request->id_denuncias;
+        $dato->id_victimas                        = $request->id_victimas;
+        $dato->id_carpetas_detenidos              = $request->id_carpetas_detenidos;
+        $dato->id_ordenes                         = $request->id_ordenes;
+        $dato->id_detendos_cii                    = $request->id_detendos_cii;
+        $dato->id_procedimientos_cii              = $request->id_procedimientos_cii;
+        $dato->id_procedimientos_vinculaciones    = $request->id_procedimientos_vinculaciones;
+        $dato->id_vinculados_proceso              = $request->id_vinculados_proceso;
+        $dato->id_imputados                       = $request->id_imputados;
 
-        $dato -> save();
+        $dato->save();
 
-        return response("ok", 200) -> header('Content-Type', 'application/json');
+        return response("ok", 200)->header('Content-Type', 'application/json');
     }
-    
-
 }
