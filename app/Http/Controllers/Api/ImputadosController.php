@@ -26,8 +26,7 @@ class ImputadosController extends Controller
             'condena'   => 'required|integer|min:1',
             'absuelto'  => 'required|integer|min:1',
             'conoral'   => 'required|integer|min:1',
-            'absoloral' => 'required|integer|min:1',
-            'total'     => 'required'
+            'absoloral' => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -37,12 +36,14 @@ class ImputadosController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new Imputados;
         $dato->sent_conden = $request->condena;
         $dato->sent_absolut = $request->absuelto;
         $dato->conden_oral = $request->conoral;
         $dato->absolut_oral = $request->absoloral;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->carpetasProcedimientos()->save($dato);
 

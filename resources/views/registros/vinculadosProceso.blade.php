@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    @extends('layouts.app')
     @section ('content')
     @php
     $id_usuario = auth()->id();
@@ -32,7 +31,6 @@
                 <input id="noficiosa" name="noficiosa" placeholder="noficiosa" type="number" min="1">
                 <input id="otramedida" name="otramedida" placeholder="otramedida" type="number" min="1">
                 <input id="sinmedida" name="sinmedida" placeholder="sinmedida" type="number" min="1">
-                <input id="total" name="total">
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>
         </form>

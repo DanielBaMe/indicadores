@@ -25,8 +25,7 @@ class DetenidosCiiController extends Controller
         $datos = [
             'flagancia'     => 'required|integer|min:1',
             'aprehension'   => 'required|integer|min:1',
-            'caso'          => 'required|integer|min:1',
-            'total'         => 'required'
+            'caso'          => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -36,11 +35,13 @@ class DetenidosCiiController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new DetenidosCii;
         $dato->flagancia = $request->flagancia;
         $dato->orden_aprehension = $request->aprehension;
         $dato->caso_urgente = $request->caso;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->carpetasProcedimientos()->save($dato);
 

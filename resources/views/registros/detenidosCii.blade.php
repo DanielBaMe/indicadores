@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    @extends('layouts.app')
     @section ('content')
     @php
     $id_usuario = auth()->id();
@@ -27,13 +26,12 @@
         @endif
         <form action="/dev/detenidos/nueva/{{$id_usuario}}" method="POST" class="form-inline align-items-center justify-content-center" autocomplete="off" enctype="multipart/form-data">
             {{ csrf_field() }}
-          
+
             <div class="form-group mx-sm-3 mb-2">
                 <input id="flagancia" name="flagancia" placeholder="Flagancia" type="number" min="1">
                 <input id="aprehension" name="aprehension" placeholder="Aprehension" type="number" min="1">
                 <input id="caso" name="caso" placeholder="caso" type="number" min="1">
-                
-                <input id="total" name="total">
+
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>
         </form>

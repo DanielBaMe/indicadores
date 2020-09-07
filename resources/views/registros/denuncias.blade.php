@@ -7,7 +7,6 @@
 </head>
 
 <body>
-  @extends('layouts.app')
   @section ('content')
   @php
   $id_usuario = auth()->id();
@@ -31,7 +30,6 @@
       <div class="form-group mx-sm-3 mb-2">
         <input id="denuncias" name="denuncias" placeholder="Denuncias" type="number" min="1">
         <input id="querellas" name="querellas" placeholder="Querellas" type="number" min="1">
-        <input id="total" name="total">
       </div>
       <button type="submit" class="btn btn-success mb-2">guardar</button>
     </form>

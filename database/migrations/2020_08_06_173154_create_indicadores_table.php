@@ -17,7 +17,6 @@ class CreateIndicadoresTable extends Migration
             $table->id();
             $table->string('anio');
             $table->string('mes');
-            $table->string('id_usuario')->nullable();
             $table->string('id_dependencia')->nullable();
             $table->string('id_denuncias')->nullable();
             $table->string('id_victimas')->nullable();

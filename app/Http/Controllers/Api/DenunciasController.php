@@ -21,8 +21,7 @@ class DenunciasController extends Controller
     {
         $datos = [
             'denuncias' => 'required|integer|min:1',
-            'querellas' => 'required|integer|min:1',
-            'total'     => 'required'
+            'querellas' => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -32,10 +31,12 @@ class DenunciasController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new Denuncias;
         $dato->denuncias = $request->denuncias;
         $dato->querellas = $request->querellas;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->denuncias()->save($dato);
 

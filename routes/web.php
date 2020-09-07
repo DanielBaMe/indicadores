@@ -28,6 +28,8 @@ Route::middleware(['auth:admin'])->group(function () {
             return view('menuRegistros');
         });
 
+        Route::get('verRegistro/{id}', 'Api\VerRegistrosController@verTodo');
+
         ////////////////////////////////////////////////////////////////////////////////////////
 
         //Registros nuevos

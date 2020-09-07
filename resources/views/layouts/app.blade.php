@@ -33,7 +33,7 @@
                     @if($id_usuario > 1)
                     Ministerio Publico
                     @endif
-                    @if(@id_usuario < 2)
+                    @if(@id_usuario == 1)
                     Procuraduria
                     @endif
                 </a>

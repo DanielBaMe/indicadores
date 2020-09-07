@@ -38,8 +38,7 @@ class CarpetasProcedimientosController extends Controller
             'oemascsnacuerdo'           => 'required|integer|min:1',
             'resueltosmediacion'        => 'required|integer|min:1',
             'resueltosaconciliacion'    => 'required|integer|min:1',
-            'resueltosacuerdo'          => 'required|integer|min:1',
-            'total'                     => 'required'
+            'resueltosacuerdo'          => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -48,6 +47,8 @@ class CarpetasProcedimientosController extends Controller
         $id_dependencia = $prueba['id'];
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+
+        $suma = $request->denuncias + $request->querellas;
 
         $dato = new CarpetasProcedimientosCii;
         $dato->arch_temporal = $request->archivo;
@@ -66,11 +67,11 @@ class CarpetasProcedimientosController extends Controller
         $dato->resueltos_oemasc_mediacion = $request->resueltosmediacion;
         $dato->resueltos_oemasc_conciliacion = $request->resueltosaconciliacion;
         $dato->resueltos_oemasc_acuerdo = $request->resueltosacuerdo;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->carpetasProcedimientos()->save($dato);
 
-        return redirect('/dev/registrar_vinculados');
+        return redirect('/dev/registrar_procedimientos');
     }
 
 

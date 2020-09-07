@@ -26,8 +26,7 @@ class OrdenesController extends Controller
             'juez'              => 'required|integer|min:1',
             'ordcumplicados'    => 'required|integer|min:1',
             'ordurgentes'       => 'required|integer|min:1',
-            'urgentescumplicas' => 'required|integer|min:1',
-            'total'             => 'required'
+            'urgentescumplicas' => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -37,13 +36,15 @@ class OrdenesController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new Ordenes;
         $dato->imputados = $request->imputados;
         $dato->juez_control = $request->juez;
         $dato->ordenes_cumplidas = $request->ordcumplicados;
         $dato->ordenes_urgentes = $request->ordurgentes;
         $dato->urgentes_cumplidas = $request->urgentescumplicas;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->ordenes()->save($dato);
 

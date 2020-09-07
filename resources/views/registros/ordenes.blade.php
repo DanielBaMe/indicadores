@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    @extends('layouts.app')
     @section ('content')
     @php
     $id_usuario = auth()->id();
@@ -33,7 +32,6 @@
                 <input id="ordcumplicados" name="ordcumplicados" placeholder="Ordenes" type="number" min="1">
                 <input id="ordurgentes" name="ordurgentes" placeholder="Urgentes" type="number" min="1">
                 <input id="urgentescumplicas" name="urgentescumplicas" placeholder="Urgentes" type="number" min="1">
-                <input id="total" name="total">
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>
         </form>

@@ -24,8 +24,7 @@ class VictimasController extends Controller
         $datos = [
             'hombres' => 'required|integer|min:1',
             'mujeres' => 'required|integer|min:1',
-            'otros'   => 'required|integer|min:1',
-            'total' => 'required'
+            'otros'   => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -35,11 +34,13 @@ class VictimasController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new Victimas;
         $dato->hombres = $request->hombres;
         $dato->mujeres = $request->mujeres;
         $dato->otros = $request->otros;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->victimas()->save($dato);
         return redirect('/dev/registrar_carpetas');

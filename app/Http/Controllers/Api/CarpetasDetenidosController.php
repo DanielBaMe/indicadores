@@ -24,10 +24,9 @@ class CarpetasDetenidosController extends Controller
     {
         $datos = [
             'detenido_flagancia' => 'required|integer|min:1',
-            'sin_detenidos'      => 'required|integer|min:1',
-            'total'              => 'required'
+            'sin_detenidos'      => 'required|integer|min:1'
         ];
-        $this -> validate($request, $datos);
+        $this->validate($request, $datos);
 
         $unidad = Dependencias::where('usuario_id', $id)->get();
         $prueba = $unidad[0];
@@ -35,10 +34,12 @@ class CarpetasDetenidosController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new CarpetasDetenidos;
-        $dato -> detenido_flagancia = $request -> detenido_flagancia;
-        $dato -> sin_detenidos = $request -> sin_detenidos;
-        $dato -> total = $request -> total;
+        $dato->detenido_flagancia = $request->detenido_flagancia;
+        $dato->sin_detenidos = $request->sin_detenidos;
+        $dato->total = $suma;
 
         $indicador->carpetasDetenidos()->save($dato);
 
@@ -58,15 +59,14 @@ class CarpetasDetenidosController extends Controller
             'sin_detenidos' => 'required',
             'total' => 'required'
         ];
-        $this -> validate($request, $datos);
+        $this->validate($request, $datos);
 
         $dato = CarpetasDetenidos::findOrFail($id);
-        $dato -> detenido_flagancia = $request -> detenido_flagancia;
-        $dato -> sin_detenidos = $request -> sin_detenidos;
-        $dato -> total = $request -> total;
-        $dato -> save();
+        $dato->detenido_flagancia = $request->detenido_flagancia;
+        $dato->sin_detenidos = $request->sin_detenidos;
+        $dato->total = $request->total;
+        $dato->save();
 
-        return response("ok", 200) -> header('Content-Type', 'application/json');
+        return response("ok", 200)->header('Content-Type', 'application/json');
     }
-
 }

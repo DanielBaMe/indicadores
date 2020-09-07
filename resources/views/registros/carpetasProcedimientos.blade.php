@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    @extends('layouts.app')
     @section ('content')
     @php
     $id_usuario = auth()->id();
@@ -16,7 +15,7 @@
     <h4>Id usuario {{$id_usuario}}</h4>
 
     <div style="padding: 60px 160px 0px 160px" class="container d-flex flex-column ">
-        <h1>Victimas</h1>
+        <h1>Carpetas con procedimientos</h1>
         @if(count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -49,7 +48,6 @@
                     <input id="resueltosaconciliacion" name="resueltosaconciliacion" placeholder="resueltosaconciliacion" type="number" min="1"></br>
                     <input id="resueltosacuerdo" name="resueltosacuerdo" placeholder="resueltosacuerdo" type="number" min="1">
                 </div>
-                <input id="total" name="total">
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>
         </form>

@@ -26,8 +26,7 @@ class VinculadosProcesoController extends Controller
             'oficiosa'  => 'required|integer|min:1',
             'noficiosa' => 'required|integer|min:1',
             'otramedida'=> 'required|integer|min:1',
-            'sinmedida' => 'required|integer|min:1',
-            'total'     => 'required|integer|min:1'
+            'sinmedida' => 'required|integer|min:1'
         ];
         $this->validate($request, $datos);
 
@@ -37,12 +36,14 @@ class VinculadosProcesoController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
+        $suma = $request->denuncias + $request->querellas;
+
         $dato = new VinculadosProceso;
         $dato->pris_prev_oficiosa = $request->oficiosa;
         $dato->pris_prev_no_oficiosa = $request->noficiosa;
         $dato->otra_medida = $request->otramedida;
         $dato->sin_medida = $request->sinmedida;
-        $dato->total = $request->total;
+        $dato->total = $suma;
 
         $indicador->carpetasDetenidos()->save($dato);
 

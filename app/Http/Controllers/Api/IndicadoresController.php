@@ -7,23 +7,30 @@ use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\Indicadores;
 use App\Models\Dependencias;
-use Auth;
 
 class IndicadoresController extends Controller
 {
 
     public function index($id)
     {
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $indicadores = Indicadores::all();
-        return view('menuRegistros', ['indicadores' => $indicadores]);
+        if ($id > 1) {
+            $unidad = Dependencias::where('usuario_id', $id)->get();
+            $prueba = $unidad[0];
+            $id_dependencia = $prueba['id'];
+
+            $indicadores = Indicadores::where('id_dependencia', $id_dependencia)->get();
+            return view('menuRegistros', ['indicadores' => $indicadores]);
+        } else {
+            $indicadores = Indicadores::all();
+            return view('menuRegistros', ['indicadores' => $indicadores]);
+        }
     }
 
     public function store(Request $request)
     {
         $datos = [
-            'anio'       => 'required|integer|min:2017',
-            'mes'        => 'required|integer|min:1',
+            'anio'       => 'required|integer|min:2017|max:2023',
+            'mes'        => 'required|integer|min:1|max:12',
             'id_usuario' => 'required|integer'
         ];
         $this->validate($request, $datos);
