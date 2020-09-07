@@ -14,21 +14,22 @@
   @endphp
   <div class="container">
 
-
+  <h4>Id usuario {{$id_usuario}}</h4>
     @if($id_usuario > 1)
-    <a href="{{ url("/dev/fecha") }}">nuevo registro</a>
+    @php
+    $id = Crypt::encrypt($id_usuario);
+    @endphp
+    <a href="{{ url("/iniciar_registro") }}">nuevo registro</a>
     </br>
-    <a href="{{ url("/dev/indicadores/{$id_usuario}") }}">ver registros</a>
+    <a href="{{ url("/dev/indicadores/{$id}") }}">ver registros</a>
     </br>
     @endif
     @if($id_usuario == 1)
-    <!-- <a href="{{ url("/dev/nuevo_usuario") }}">Crear usuario nuevo</a>
-  </br>
-  </br>
-  <a href="{{ url("/dev/unidad") }}">Crear x cosa</a>
-  </br>
-  </br> -->
-    <a href="{{ url("/dev/indicadores/{$id_usuario}") }}">ver registros</a>
+    @php
+    $id = Crypt::encrypt($id_usuario);
+    @endphp
+    <!-- <a href="{{ url("/dev/nuevo_usuario") }}">Crear usuario nuevo</a> -->
+    <a href="{{ url("/dev/indicadores/{$id}") }}">ver registros</a>
     @endif
   </div>
   @endsection

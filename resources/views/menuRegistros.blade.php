@@ -16,31 +16,43 @@
   $id_usuario = auth()->id();
   @endphp
   <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th hidden> id</th>
-          <th> Año</th>
-          <th> Mes </th>
-          <th> Acciones </th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach($indicadores as $indicador)
-        <tr>
-          <td hidden> {{$indicador->id}} </td>
-          <td> {{$indicador->anio}} </td>
-          <td> {{$indicador->mes}} </td>
-          <td>
-            @if($indicador->anio == 2020)
-            <a href="{{ url("/dev/menu") }}">Editar</a>
-            @endif
-            <a href="{{ url("/dev/verRegistro/{$indicador->id}") }}">Ver registro</a>
-          </td>
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
+    @php
+    $tam = count($indicadores)
+    @endphp
+    @if($tam > 0)
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th hidden> id</th>
+            <th> Año</th>
+            <th> Mes </th>
+            <th> Acciones </th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($indicadores as $indicador)
+          <tr>
+            <td hidden> {{$indicador->id}} </td>
+            <td> {{$indicador->anio}} </td>
+            <td> {{$indicador->mes}} </td>
+            <td>
+              @if($indicador->anio == 2020)
+              <a href="{{ url("/dev/menu") }}">Editar</a>
+              @endif
+              <a href="{{ url("/dev/verRegistro/{$indicador->id}") }}">Ver registro</a>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+    @endif
+    @if($tam == 0)
+    <div>
+      <h1>No hay registros creados por el usuario</h1>
+    </div>
+    @endif
   </div>
   @endsection
 </body>

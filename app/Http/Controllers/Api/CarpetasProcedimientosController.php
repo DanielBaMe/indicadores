@@ -71,7 +71,7 @@ class CarpetasProcedimientosController extends Controller
 
         $indicador->carpetasProcedimientos()->save($dato);
 
-        return redirect('/dev/registrar_procedimientos');
+        return redirect('/registrar_procedimientos');
     }
 
 

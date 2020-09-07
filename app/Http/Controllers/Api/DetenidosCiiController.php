@@ -9,7 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Models\DetenidosCii;
 use App\Models\Indicadores;
 use App\Models\Dependencias;
-use Auth;
+
+use App\Models\CarpetasDetenidos;
+use App\Models\Ordenes;
+
 
 class DetenidosCiiController extends Controller
 {
@@ -29,23 +32,39 @@ class DetenidosCiiController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+        $carpetas = CarpetasDetenidos::where('indicadores_id', $indicador['id'])->latest()->first();
+        $ordenes = Ordenes::where('indicadores_id', $indicador['id'])->latest()->first();
 
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->flagancia + $request->aprehension + $request->caso;
 
-        $dato = new DetenidosCii;
-        $dato->flagancia = $request->flagancia;
-        $dato->orden_aprehension = $request->aprehension;
-        $dato->caso_urgente = $request->caso;
-        $dato->total = $suma;
+        $reactivoUno = $request->flagancia;
+        $reactivoDos = $request->aprehension;
+        $reactivoTres = $request->caso;
 
-        $indicador->carpetasProcedimientos()->save($dato);
-
-        return redirect('/dev/registrar_carpetas_procedimentales');
+        if ($reactivoUno >= $carpetas['detenido_flagancia']) {
+            if($reactivoDos == $ordenes['ordenes_cumplidas']){
+                if($reactivoTres == $ordenes['urgentes_cumplidas']){
+                    $dato = new DetenidosCii;
+                    $dato->flagancia = $request->flagancia;
+                    $dato->orden_aprehension = $request->aprehension;
+                    $dato->caso_urgente = $request->caso;
+                    $dato->total = $suma;
+            
+                    $indicador->carpetasProcedimientos()->save($dato);
+            
+                    return redirect('/registrar_carpetas_procedimentales');
+                }else{
+                    echo "El número de detenidos por orden de aprehensión no es igual al registrado en el reactivo 5.5.";
+                }
+            }else{
+                echo "El número de detenidos por orden de aprehensión no es igual al registrado en el reactivo 5.3.";
+            }
+        }else{
+            echo "El numero de detenidos en flagancia no es igual o mayor al registrado en el reactivo 4.1";
+        }
     }
 
     public function show($id)

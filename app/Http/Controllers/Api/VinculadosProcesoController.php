@@ -30,13 +30,10 @@ class VinculadosProcesoController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
-
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->oficiosa + $request->noficiosa + $request->otramedida + $request->sinmedida;
 
         $dato = new VinculadosProceso;
         $dato->pris_prev_oficiosa = $request->oficiosa;
@@ -47,7 +44,7 @@ class VinculadosProcesoController extends Controller
 
         $indicador->carpetasDetenidos()->save($dato);
 
-        return redirect('/dev/registrar_imputados');
+        return redirect('/registrar_imputados');
     }
 
     public function show($id)

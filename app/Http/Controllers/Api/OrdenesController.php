@@ -30,13 +30,10 @@ class OrdenesController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
-
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->imputados + $request->juez + $request->ordcumplicados + $request->ordurgentes + $request->urgentescumplicas;
 
         $dato = new Ordenes;
         $dato->imputados = $request->imputados;
@@ -48,7 +45,7 @@ class OrdenesController extends Controller
 
         $indicador->ordenes()->save($dato);
 
-        return redirect('/dev/registrar_detenidos');
+        return redirect('/registrar_detenidos');
     }
 
     public function show($id)

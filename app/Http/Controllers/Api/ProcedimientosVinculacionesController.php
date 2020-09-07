@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ProcedimientosVinculaciones;
 use App\Models\Indicadores;
 use App\Models\Dependencias;
-use Auth;
+
+use App\Models\CarpetasProcedimientosCii;
 
 class ProcedimientosVinculacionesController extends Controller
 {
@@ -40,34 +41,37 @@ class ProcedimientosVinculacionesController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+        $carpetas = CarpetasProcedimientosCii::where('indicadores_id', $indicador['id'])->latest()->first();
 
         $suma = $request->denuncias + $request->querellas;
 
-        $dato = new ProcedimientosVinculaciones;
-        $dato->tramite_juez = $request->juez;
-        $dato->criterio_oportunidad = $request->oportunidad;
-        $dato->tramite_suspencion = $request->tramitesusp;
-        $dato->cumplimiento_suspencion = $request->cumplimientosusp;
-        $dato->resueltos_otros = $request->resueltosotros;
-        $dato->tramite_proces_abreviado = $request->tramiteProces;
-        $dato->resuelto_proces_abreviado = $request->resueltoAbreviado;
-        $dato->tramite_tribunal = $request->tramiteTribunal;
-        $dato->resueltos_juicio_oral = $request->resueltosOtral;
-        $dato->oemasc_sn_acuerdo = $request->oemascSn;
-        $dato->oemasc_cn_acuerdo = $request->oemascCn;
-        $dato->resueltos_oemasc_mediacion = $request->resueltosMediacion;
-        $dato->resueltos_oemasc_conciliacion = $request->resueltosConciliacion;
-        $dato->resueltos_oemasc_acuerdo = $request->resueltosAcuerdo;
-        $dato->total = $suma;
+        if ($suma >= $carpetas['vinculados']) {
+            $dato = new ProcedimientosVinculaciones;
+            $dato->tramite_juez = $request->juez;
+            $dato->criterio_oportunidad = $request->oportunidad;
+            $dato->tramite_suspencion = $request->tramitesusp;
+            $dato->cumplimiento_suspencion = $request->cumplimientosusp;
+            $dato->resueltos_otros = $request->resueltosotros;
+            $dato->tramite_proces_abreviado = $request->tramiteProces;
+            $dato->resuelto_proces_abreviado = $request->resueltoAbreviado;
+            $dato->tramite_tribunal = $request->tramiteTribunal;
+            $dato->resueltos_juicio_oral = $request->resueltosOtral;
+            $dato->oemasc_sn_acuerdo = $request->oemascSn;
+            $dato->oemasc_cn_acuerdo = $request->oemascCn;
+            $dato->resueltos_oemasc_mediacion = $request->resueltosMediacion;
+            $dato->resueltos_oemasc_conciliacion = $request->resueltosConciliacion;
+            $dato->resueltos_oemasc_acuerdo = $request->resueltosAcuerdo;
+            $dato->total = $suma;
 
-        $indicador->procedimientosVinc()->save($dato);
+            $indicador->procedimientosVinc()->save($dato);
 
-        return redirect('/dev/registrar_vinculados');
+            return redirect('/registrar_vinculados');
+        } else {
+            echo "La suma de los reactivos 8.1 a 8.14 no es igual o mayor a la registrada en el reactivo 7.11.";
+        }
     }
 
 

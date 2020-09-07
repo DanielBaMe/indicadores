@@ -16,6 +16,58 @@ Route::middleware(['auth:admin'])->group(function () {
         return view('admin');
     });
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+        //Registros nuevos
+
+        Route::get('/nuevo_usuario', function () { //Crear usuario
+            return view('/registros/usuarios');
+        });
+
+        Route::get('/unidad', function () { //Crear unidad
+            return view('/registros/unidad');
+        });
+
+        Route::get('/registrar_carpetas', function () { //Carpetas
+            return view('/registros/carpetas');
+        });
+
+        Route::get('/registrar_carpetas_procedimentales', function () { //Carpetas Procedimientos
+            return view('/registros/carpetasProcedimientos');
+        });
+
+        Route::get('/registrar_denuncias', function () { //Denuncias
+            return view('/registros/denuncias');
+        });
+
+        Route::get('/registrar_detenidos', function () { //Detenidos
+            return view('/registros/detenidosCii');
+        });
+
+        Route::get('/registrar_imputados', function () { //Imputados
+            return view('/registros/imputados');
+        });
+
+        Route::get('/registrar_ordenes', function () { //Ordenes
+            return view('/registros/ordenes');
+        });
+
+        Route::get('/registrar_procedimientos', function () { //Procedimientos
+            return view('/registros/procedimientosVinculaciones');
+        });
+
+        Route::get('/registrar_victimas', function () { //Victimas
+            return view('/registros/victimas');
+        });
+
+        Route::get('/registrar_vinculados', function () { //vinculados
+            return view('/registros/vinculadosProceso');
+        });
+
+    Route::get('/iniciar_registro', function () { //Fecha de registro
+        return view('/registros/fechaRegistro');
+    });
+
     Route::prefix('dev')->group(function () {
 
         //Vistas
@@ -30,57 +82,6 @@ Route::middleware(['auth:admin'])->group(function () {
 
         Route::get('verRegistro/{id}', 'Api\VerRegistrosController@verTodo');
 
-        ////////////////////////////////////////////////////////////////////////////////////////
-
-        //Registros nuevos
-
-        Route::get('nuevo_usuario', function () { //Crear usuario
-            return view('/registros/usuarios');
-        });
-
-        Route::get('unidad', function () { //Crear unidad
-            return view('/registros/unidad');
-        });
-
-        Route::get('fecha', function () { //Fecha de registro
-            return view('/registros/fechaRegistro');
-        });
-
-        Route::get('registrar_carpetas', function () { //Carpetas
-            return view('/registros/carpetas');
-        });
-
-        Route::get('registrar_carpetas_procedimentales', function () { //Carpetas Procedimientos
-            return view('/registros/carpetasProcedimientos');
-        });
-
-        Route::get('registrar_denuncias', function () { //Denuncias
-            return view('/registros/denuncias');
-        });
-
-        Route::get('registrar_detenidos', function () { //Detenidos
-            return view('/registros/detenidosCii');
-        });
-
-        Route::get('registrar_imputados', function () { //Imputados
-            return view('/registros/imputados');
-        });
-
-        Route::get('registrar_ordenes', function () { //Ordenes
-            return view('/registros/ordenes');
-        });
-
-        Route::get('registrar_procedimientos', function () { //Procedimientos
-            return view('/registros/procedimientosVinculaciones');
-        });
-
-        Route::get('registrar_victimas', function () { //Victimas
-            return view('/registros/victimas');
-        });
-
-        Route::get('registrar_vinculados', function () { //vinculados
-            return view('/registros/vinculadosProceso');
-        });
 
         /////////////////////////////////////////////////////////////////////////////////////
 
@@ -130,7 +131,7 @@ Route::middleware(['auth:admin'])->group(function () {
         //Indicadores
         Route::prefix('indicadores')->group(function () {
             Route::get('/{id}', 'Api\IndicadoresController@index');
-            Route::post('/nueva', 'Api\IndicadoresController@store');
+            Route::post('/nueva/{id}', 'Api\IndicadoresController@store');
             Route::post('/editar/{id}', 'Api\IndicadoresController@update');
             // Route::get('/{id}', 'Api\IndicadoresController@show');
         });

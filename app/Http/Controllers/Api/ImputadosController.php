@@ -30,13 +30,10 @@ class ImputadosController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
-
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->condena + $request->absuelto + $request->conoral + $request->absoloral;
 
         $dato = new Imputados;
         $dato->sent_conden = $request->condena;

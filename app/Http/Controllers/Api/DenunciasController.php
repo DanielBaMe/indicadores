@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Denuncias;
 use App\Models\Indicadores;
 use App\Models\Dependencias;
-use Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DenunciasController extends Controller
 {
@@ -25,11 +25,8 @@ class DenunciasController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
-
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
         $suma = $request->denuncias + $request->querellas;
 
@@ -39,8 +36,8 @@ class DenunciasController extends Controller
         $dato->total = $suma;
 
         $indicador->denuncias()->save($dato);
-
-        return redirect('/dev/registrar_victimas');
+        Alert::success('Registrado', 'Registro guardado');
+        return redirect('/registrar_victimas');
     }
 
     public function update(Request $request, $id)

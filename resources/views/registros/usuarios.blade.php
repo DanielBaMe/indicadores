@@ -6,7 +6,7 @@
     <title></title>
 </head>
 
-<body>
+<body> 
     @extends('layouts.app')
     @section ('content')
     @php
@@ -29,8 +29,8 @@
 
             <div class="form-group mx-sm-3 mb-2">
                 <input id="nombre" name="nombre" placeholder="nombre" type="text" min="4" autocomplete="off">
-                <input id="email" name="email" placeholder="email" type="email" min="4"  autocomplete="off">
-                <input id="password" name="password" type="password" min="4"  autocomplete="off">
+                <input id="email" name="email" placeholder="email" type="email" min="4" autocomplete="off">
+                <input id="password" name="password" type="password" min="4" autocomplete="off">
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>
         </form>

@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="es" dir="ltr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <title>Detenidos</title>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
-    @section ('content')
     @php
     $id_usuario = auth()->id();
     @endphp
@@ -28,15 +40,14 @@
             {{ csrf_field() }}
 
             <div class="form-group mx-sm-3 mb-2">
-                <input id="flagancia" name="flagancia" placeholder="Flagancia" type="number" min="1">
-                <input id="aprehension" name="aprehension" placeholder="Aprehension" type="number" min="1">
-                <input id="caso" name="caso" placeholder="caso" type="number" min="1">
+                <input id="flagancia" name="flagancia" placeholder="Flagancia" type="number" min="1" required>
+                <input id="aprehension" name="aprehension" placeholder="Aprehension" type="number" min="1" required>
+                <input id="caso" name="caso" placeholder="caso" type="number" min="1" required>
 
             </div>
             <button type="submit" class="btn btn-success mb-2">guardar</button>
         </form>
     </div>
-    @endsection
 </body>
 
 </html>

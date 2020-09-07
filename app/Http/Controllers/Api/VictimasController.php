@@ -28,13 +28,10 @@ class VictimasController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
-
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->hombres + $request->mujeres + $request->otros;
 
         $dato = new Victimas;
         $dato->hombres = $request->hombres;
@@ -43,7 +40,7 @@ class VictimasController extends Controller
         $dato->total = $suma;
 
         $indicador->victimas()->save($dato);
-        return redirect('/dev/registrar_carpetas');
+        return redirect('/registrar_carpetas');
     }
 
     public function update(Request $request, $id)

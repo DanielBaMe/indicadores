@@ -7,18 +7,18 @@ use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\Indicadores;
 use App\Models\Dependencias;
+use Illuminate\Support\Facades\Crypt;
 
 class IndicadoresController extends Controller
 {
 
     public function index($id)
     {
-        if ($id > 1) {
-            $unidad = Dependencias::where('usuario_id', $id)->get();
-            $prueba = $unidad[0];
-            $id_dependencia = $prueba['id'];
+        $desencriptado = Crypt::decrypt($id);
+        if ($desencriptado > 1) {
+            $unidad = Dependencias::where('usuario_id', $desencriptado)->latest()->first();
 
-            $indicadores = Indicadores::where('id_dependencia', $id_dependencia)->get();
+            $indicadores = Indicadores::where('id_dependencia', $unidad['id'])->get();
             return view('menuRegistros', ['indicadores' => $indicadores]);
         } else {
             $indicadores = Indicadores::all();
@@ -26,43 +26,22 @@ class IndicadoresController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+        $desencriptado = Crypt::decrypt($id);
         $datos = [
             'anio'       => 'required|integer|min:2017|max:2023',
-            'mes'        => 'required|integer|min:1|max:12',
-            'id_usuario' => 'required|integer'
+            'mes'        => 'required|integer|min:1|max:12'
         ];
         $this->validate($request, $datos);
 
-        //$registros = Indicadores::where('id_usuario', $id);
-        // if(empty($tamanio)){
-        $iduser = $request->id_usuario;
-        $unidad = Dependencias::where('usuario_id', $iduser)->get();
-        //dump($unidad[0]);
-        $prueba = $unidad[0];
-        $id = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $desencriptado)->latest()->first();
         $dato = new Indicadores;
         $dato->anio            = $request->anio;
         $dato->mes             = $request->mes;
-        $dato->id_dependencia  = $id;
+        $dato->id_dependencia  = $unidad['id'];
         $dato->save();
-        return redirect('/dev/registrar_denuncias');
-        // }else{
-        //     foreach($registros as $registro){
-        //         if(($registro-> anio) == ($dato-> anio) && ($registro -> mes) == ($dato -> mes) ){
-        //             return false;
-        //         }else{
-        //             $dato = new Indicadores;
-        //             $dato -> anio           = $request -> anio;
-        //             $dato -> mes            = $request -> mes;
-        //             $dato -> id_usuario     = $request -> id_usuario;
-        //             $dato -> save();
-
-        //             return redirect('/detenidosView');
-        //         }
-        //     }
-        // }
+        return redirect('/registrar_denuncias');
     }
 
     public function show($id)

@@ -28,13 +28,10 @@ class CarpetasDetenidosController extends Controller
         ];
         $this->validate($request, $datos);
 
-        $unidad = Dependencias::where('usuario_id', $id)->get();
-        $prueba = $unidad[0];
-        $id_dependencia = $prueba['id'];
+        $unidad = Dependencias::where('usuario_id', $id)->latest()->first();
+        $indicador = Indicadores::where('id_dependencia', $unidad['id'])->latest()->first();
 
-        $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
-
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->detenido_flagancia + $request->sin_detenidos;
 
         $dato = new CarpetasDetenidos;
         $dato->detenido_flagancia = $request->detenido_flagancia;
@@ -43,7 +40,7 @@ class CarpetasDetenidosController extends Controller
 
         $indicador->carpetasDetenidos()->save($dato);
 
-        return redirect('/dev/registrar_ordenes');
+        return redirect('/registrar_ordenes');
     }
 
     public function show($id)
