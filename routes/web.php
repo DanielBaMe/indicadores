@@ -18,55 +18,59 @@ Route::middleware(['auth:admin'])->group(function () {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-        //Registros nuevos
+    //Registros nuevos
 
-        Route::get('/nuevo_usuario', function () { //Crear usuario
-            return view('/registros/usuarios');
-        });
+    Route::get('/nuevo_usuario', function () { //Crear usuario
+        return view('/registros/usuarios');
+    });
 
-        Route::get('/unidad', function () { //Crear unidad
-            return view('/registros/unidad');
-        });
+    Route::get('/unidad', function () { //Crear unidad
+        return view('/registros/unidad');
+    });
 
-        Route::get('/registrar_carpetas', function () { //Carpetas
-            return view('/registros/carpetas');
-        });
+    Route::get('/registrar_carpetas', function () { //Carpetas
+        return view('/registros/carpetas');
+    });
 
-        Route::get('/registrar_carpetas_procedimentales', function () { //Carpetas Procedimientos
-            return view('/registros/carpetasProcedimientos');
-        });
+    Route::get('/registrar_carpetas_procedimentales', function () { //Carpetas Procedimientos
+        return view('/registros/carpetasProcedimientos');
+    });
 
-        Route::get('/registrar_denuncias', function () { //Denuncias
-            return view('/registros/denuncias');
-        });
+    Route::get('/registrar_denuncias', function () { //Denuncias
+        return view('/registros/denuncias');
+    });
 
-        Route::get('/registrar_detenidos', function () { //Detenidos
-            return view('/registros/detenidosCii');
-        });
+    Route::get('/registrar_detenidos', function () { //Detenidos
+        return view('/registros/detenidosCii');
+    });
 
-        Route::get('/registrar_imputados', function () { //Imputados
-            return view('/registros/imputados');
-        });
+    Route::get('/registrar_imputados', function () { //Imputados
+        return view('/registros/imputados');
+    });
 
-        Route::get('/registrar_ordenes', function () { //Ordenes
-            return view('/registros/ordenes');
-        });
+    Route::get('/registrar_ordenes', function () { //Ordenes
+        return view('/registros/ordenes');
+    });
 
-        Route::get('/registrar_procedimientos', function () { //Procedimientos
-            return view('/registros/procedimientosVinculaciones');
-        });
+    Route::get('/registrar_procedimientos', function () { //Procedimientos
+        return view('/registros/procedimientosVinculaciones');
+    });
 
-        Route::get('/registrar_victimas', function () { //Victimas
-            return view('/registros/victimas');
-        });
+    Route::get('/registrar_victimas', function () { //Victimas
+        return view('/registros/victimas');
+    });
 
-        Route::get('/registrar_vinculados', function () { //vinculados
-            return view('/registros/vinculadosProceso');
-        });
+    Route::get('/registrar_vinculados', function () { //vinculados
+        return view('/registros/vinculadosProceso');
+    });
 
     Route::get('/iniciar_registro', function () { //Fecha de registro
         return view('/registros/fechaRegistro');
     });
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
     Route::prefix('dev')->group(function () {
 
@@ -185,6 +189,14 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::post('/editar/{id}', 'Api\VinculadosProcesoController@update');
             Route::get('/{id}', 'Api\VinculadosProcesoController@show');
         });
+
+
+
+
+
+
+        //Graficas
+        Route::get('grafica/{id}', 'Api\VerRegistrosController@graficar');
     });
 
     // Route::get('/admin/{path?}', function(){

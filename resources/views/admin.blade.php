@@ -13,8 +13,6 @@
   $id_usuario = auth()->id();
   @endphp
   <div class="container">
-
-  <h4>Id usuario {{$id_usuario}}</h4>
     @if($id_usuario > 1)
     @php
     $id = Crypt::encrypt($id_usuario);
@@ -30,6 +28,7 @@
     @endphp
     <!-- <a href="{{ url("/dev/nuevo_usuario") }}">Crear usuario nuevo</a> -->
     <a href="{{ url("/dev/indicadores/{$id}") }}">ver registros</a>
+    <a href="{{ url("/dev/grafica/{$id}")}}">Ver graficas</a>
     @endif
   </div>
   @endsection

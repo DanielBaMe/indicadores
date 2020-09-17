@@ -1,26 +1,50 @@
-<template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
 
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                        hola mundo
-                        <router-link to='/denuncias'>denuncias</router-link>
-                        <router-link to='/victimas'>vinctimas</router-link>
-                </div>
-            </div>
-        </div>
-    </div>
+<template>
+  <div class="small">
+    <h4>Denuncias</h4>
+    <line-chart :chart-data="datacollection" :height="100"></line-chart>
+  </div>
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
+
+import LineChart from './LineChart.js'
+
+export default {
+  components: {
+    LineChart
+  },
+  data(){
+    return {
+      datacollection: null
     }
+  },
+  mounted () {
+    this.fillData(denuncias)
+  },
+  methods: {
+
+    fillData (chartData)
+    {
+      this.datacollection = {
+        labels: ['Denuncias','Querellas'],
+        datasets: [
+          {
+            label: 'Ventas',
+            backgroundColor: '#FF0066',
+            data: chartData
+          },
+        ]
+      }
+    }
+  }
+}
 </script>
+
+<style lang="css">
+.small {
+  max-width: 800px;
+  /* max-height: 500px; */
+  margin:  50px auto;
+}
+</style>

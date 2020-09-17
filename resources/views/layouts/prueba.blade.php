@@ -27,7 +27,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/admin') }}">
+                <a class="navbar-brand">
                     @include('sweetalert::alert')
                     @php
                     $id_usuario = auth()->id();
@@ -71,15 +71,6 @@
                                         Menu principal
                                     </a>
                                 </div> -->
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}">
-                                    Cerrar sesión
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
                         </li>
                         @endguest
                     </ul>

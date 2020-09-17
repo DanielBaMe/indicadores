@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DetenidosCii;
 use App\Models\Indicadores;
 use App\Models\Dependencias;
-
+use SweetAlert;
 use App\Models\CarpetasDetenidos;
 use App\Models\Ordenes;
 
@@ -63,7 +63,8 @@ class DetenidosCiiController extends Controller
                 echo "El número de detenidos por orden de aprehensión no es igual al registrado en el reactivo 5.3.";
             }
         }else{
-            echo "El numero de detenidos en flagancia no es igual o mayor al registrado en el reactivo 4.1";
+            //echo "El numero de detenidos en flagancia no es igual o mayor al registrado en el reactivo 4.1";
+            alert()->warning('no cumple', 'Error');
         }
     }
 

@@ -3,6 +3,9 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <title>Registro</title>
 </head>
 
@@ -30,7 +33,7 @@
       <div class="form-group mx-sm-3 mb-2">
         <input id="mes" name="mes" placeholder="Mes" type="number" min="01" max="12" required>
         <input id="anio" name="anio" placeholder="Año" type="number" min="2017" max="2023" required>
-  
+
       </div>
       <button type="submit" class="btn btn-success mb-2">guardar</button>
       <button><a href="{{ url("/admin") }}">Cancelar</a></button>
