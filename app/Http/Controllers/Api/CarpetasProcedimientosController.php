@@ -48,7 +48,9 @@ class CarpetasProcedimientosController extends Controller
 
         $indicador = Indicadores::where('id_dependencia', $id_dependencia)->latest()->first();
 
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->archivo + $request->abstencion + $request->ejercicio + $request->criterio + $request->incompetencia + $request->acumulacion + $request->sobreisimiento
+        + $request->ocausa + $request->odecision + $request->tramite + $request->vinculados + $request->oemasccnacuerdo + $request->oemascsnacuerdo + $request->resueltosmediacion
+        + $request->resueltosaconciliacion + $request->resueltosacuerdo;
 
         $dato = new CarpetasProcedimientosCii;
         $dato->arch_temporal = $request->archivo;

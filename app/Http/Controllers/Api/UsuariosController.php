@@ -55,7 +55,7 @@ class UsuariosController extends Controller
             $dato -> password = Hash::make($request -> password);
             $dato -> save();
 
-            return view('/admin')
+            return view('/admin');
     }
 
     /**

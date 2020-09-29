@@ -46,7 +46,9 @@ class ProcedimientosVinculacionesController extends Controller
 
         $carpetas = CarpetasProcedimientosCii::where('indicadores_id', $indicador['id'])->latest()->first();
 
-        $suma = $request->denuncias + $request->querellas;
+        $suma = $request->juez + $request->oportunidad + $request->tramitesusp + $request->cumplimientosusp + $request->resueltosotros + $request->tramiteProces 
+        + $request->resueltoAbreviado + $request->tramiteTribunal + $request->resueltosOtral + $request->oemascSn + $request->oemascCn + $request->resueltosMediacion 
+        + $request->resueltosConciliacion + $request->resueltosAcuerdo;
 
         if ($suma >= $carpetas['vinculados']) {
             $dato = new ProcedimientosVinculaciones;
