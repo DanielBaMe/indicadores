@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    @extends('layout/prueba')
+    @extends('layouts.prueba')
     @section('content')
     @php
     $id_usuario = auth()->id();

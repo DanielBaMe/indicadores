@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  @extends('layout/prueba')
+  @extends('layouts.prueba')
   @section('content')
   @include('sweetalert::alert')
   @php

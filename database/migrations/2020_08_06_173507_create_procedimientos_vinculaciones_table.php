@@ -22,7 +22,7 @@ class CreateProcedimientosVinculacionesTable extends Migration
             $table->string('resueltos_otros');
             $table->string('tramite_proces_abreviado');
             $table->string('resuelto_proces_abreviado');
-            $table->string('tramite_tributal');
+            $table->string('tramite_tribunal');
             $table->string('resueltos_juicio_oral');
             $table->string('oemasc_sn_acuerdo');
             $table->string('oemasc_cn_acuerdo');
