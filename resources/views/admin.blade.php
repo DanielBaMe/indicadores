@@ -29,6 +29,7 @@
     <!-- <a href="{{ url("/dev/nuevo_usuario") }}">Crear usuario nuevo</a> -->
     <a href="{{ url("/dev/indicadores/{$id}") }}">ver registros</a>
     <a href="{{ url("/dev/grafica/{$id}")}}">Ver graficas</a>
+    <a href="{{ url("/cambiar")}}">Cambiar usuarios de ministerio publico</a>
     @endif
   </div>
   @endsection
